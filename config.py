@@ -1,51 +1,53 @@
-#// FILE: bot/config.py
+# FILE: bot/config.py
 import os
+from dotenv import load_dotenv
+
+# Загружаем переменные из .env файла (если он есть)
+load_dotenv()
 
 # ========== Токен и администраторы ==========
-BOT_TOKEN = "8392366813:AAFclxTQb1gTEjiKsp63r-Bdj4T9NfSkNi0"  # ЗАМЕНИТЕ НА СВОЙ
-ADMIN_IDS = [5184484643]  # ID администраторов (могут использовать /admin)
-OWNER_ID = 5184484643     # Владелец (полный доступ)
-TECH_ADMIN_ID = 1890263091  # Технический администратор
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8392366813:AAFclxTQb1gTEjiKsp63r-Bdj4T9NfSkNi0")
+ADMIN_IDS = list(map(int, os.getenv("ADMIN_IDS", "5184484643").split(',')))
+OWNER_ID = int(os.getenv("OWNER_ID", "5184484643"))
+TECH_ADMIN_ID = int(os.getenv("TECH_ADMIN_ID", "1890263091"))
 
 # ========== База данных ==========
-DATABASE_NAME = "stars_bot.db"
-BOT_USERNAME = "starfly_robot"  # Ваш username бота (без @)
+DATABASE_NAME = os.getenv("DATABASE_NAME", "stars_bot.db")
+BOT_USERNAME = os.getenv("BOT_USERNAME", "starfly_robot")  # Ваш username бота (без @)
 
 # ========== Основные курсы и лимиты (будут перезаписаны из БД) ==========
-STAR_RATE = 1.6          # 1 звезда = 1.6₽
-MIN_STARS = 50           # минимальная покупка в звёздах
+STAR_RATE = float(os.getenv("STAR_RATE", "1.6"))          # 1 звезда = 1.6₽
+MIN_STARS = int(os.getenv("MIN_STARS", "50"))             # минимальная покупка в звёздах
 
 # ========== Мини-игры ==========
-MINES_GAME_WIN_REWARD = 5      # +5 виртуальных звёзд за победу
-MINES_GAME_LOSE_PENALTY = 3    # -3 виртуальных звёзд за проигрыш
-CASINO_BET_AMOUNTS = [15, 25, 50, 200, 500]  # доступные ставки
-CASINO_WIN_CHANCE = 0.05       # 5% шанс выигрыша
-CASINO_WIN_MULTIPLIER = 2.5    # x2.5 при выигрыше
-CASINO_COOLDOWN_SECONDS = 30   # кулдаун между играми
+MINES_GAME_WIN_REWARD = int(os.getenv("MINES_GAME_WIN_REWARD", "5"))      # +5 виртуальных звёзд за победу
+MINES_GAME_LOSE_PENALTY = int(os.getenv("MINES_GAME_LOSE_PENALTY", "3"))  # -3 виртуальных звёзд за проигрыш
+CASINO_BET_AMOUNTS = list(map(int, os.getenv("CASINO_BET_AMOUNTS", "15,25,50,200,500").split(',')))  # доступные ставки
+CASINO_WIN_CHANCE = float(os.getenv("CASINO_WIN_CHANCE", "0.05"))         # 5% шанс выигрыша
+CASINO_WIN_MULTIPLIER = float(os.getenv("CASINO_WIN_MULTIPLIER", "2.5"))  # x2.5 при выигрыше
+CASINO_COOLDOWN_SECONDS = int(os.getenv("CASINO_COOLDOWN_SECONDS", "30")) # кулдаун между играми
 
 # ========== Экономика и комиссии ==========
-VIRTUAL_TO_REAL_RATE = 0.5     # 1 вирт = 0.5 реальных
-REAL_TO_VIRTUAL_RATE = 1.6     # 1 реальная = 1.6 виртуальных
-REAL_TO_VIRTUAL_MIN = 15       # минимум реальных звёзд для обмена
-WITHDRAW_MIN_REAL = 50         # минимальный вывод в реальных звёздах
-WITHDRAW_AMOUNT = 25           # сумма вывода (устарело)
-VIRTUAL_TO_REAL_COMMISSION = 0.5  # 50% комиссия на вирт->реал
-WITHDRAW_COMMISSION = 0.5      # 50% комиссия на вывод
-EXCHANGE_COMMISSION = 0.2      # 20% комиссия на обмен реальные->вирт
+VIRTUAL_TO_REAL_RATE = float(os.getenv("VIRTUAL_TO_REAL_RATE", "0.5"))       # 1 вирт = 0.5 реальных
+REAL_TO_VIRTUAL_RATE = float(os.getenv("REAL_TO_VIRTUAL_RATE", "1.6"))       # 1 реальная = 1.6 виртуальных
+REAL_TO_VIRTUAL_MIN = int(os.getenv("REAL_TO_VIRTUAL_MIN", "15"))            # минимум реальных звёзд для обмена
+WITHDRAW_MIN_REAL = int(os.getenv("WITHDRAW_MIN_REAL", "50"))                # минимальный вывод в реальных звёздах
+WITHDRAW_AMOUNT = int(os.getenv("WITHDRAW_AMOUNT", "25"))                    # сумма вывода (устарело)
+VIRTUAL_TO_REAL_COMMISSION = float(os.getenv("VIRTUAL_TO_REAL_COMMISSION", "0.5"))  # 50% комиссия на вирт->реал
+WITHDRAW_COMMISSION = float(os.getenv("WITHDRAW_COMMISSION", "0.5"))        # 50% комиссия на вывод
+EXCHANGE_COMMISSION = float(os.getenv("EXCHANGE_COMMISSION", "0.2"))        # 20% комиссия на обмен реальные->вирт
 
 # ========== Реферальная система ==========
-REFERRAL_PERCENT = 10          # базовый % (будет заменён уровнями из БД)
-REFERRAL_REWARD_TYPE = 'virtual'  # тип награды (virtual/real)
+REFERRAL_PERCENT = int(os.getenv("REFERRAL_PERCENT", "10"))                 # базовый % (будет заменён уровнями из БД)
+REFERRAL_REWARD_TYPE = os.getenv("REFERRAL_REWARD_TYPE", "virtual")         # тип награды (virtual/real)
 
 # ========== Анти-абуз ==========
-ACTION_TIMEOUT_SECONDS = 5      # минимальное время между действиями
-MAX_REQUESTS_PER_MINUTE = 30    # макс запросов в минуту
-MAX_TICKETS_PER_DAY = 5         # макс тикетов в день от одного пользователя
+ACTION_TIMEOUT_SECONDS = int(os.getenv("ACTION_TIMEOUT_SECONDS", "5"))      # минимальное время между действиями
+MAX_REQUESTS_PER_MINUTE = int(os.getenv("MAX_REQUESTS_PER_MINUTE", "30"))   # макс запросов в минуту
+MAX_TICKETS_PER_DAY = int(os.getenv("MAX_TICKETS_PER_DAY", "5"))            # макс тикетов в день от одного пользователя
 
 # ========== Подписка на каналы ==========
-REQUIRED_CHANNELS = [
-    -1002623846749,  # ID канала (пример)
-]
+REQUIRED_CHANNELS = list(map(int, os.getenv("REQUIRED_CHANNELS", "-1002623846749").split(',')))
 
 # ========== Роли и их отображение ==========
 ROLE_NAMES = {
@@ -58,36 +60,28 @@ ROLE_NAMES = {
 }
 
 # ========== Директории ==========
-SCREENSHOTS_DIR = "screenshots"
+SCREENSHOTS_DIR = os.getenv("SCREENSHOTS_DIR", "screenshots")
 os.makedirs(SCREENSHOTS_DIR, exist_ok=True)
 
-BACKUP_DIR = "backups"
+BACKUP_DIR = os.getenv("BACKUP_DIR", "backups")
 os.makedirs(BACKUP_DIR, exist_ok=True)
 
 # ========== Тикеты и поддержка ==========
-TICKET_SUBJECTS = [
-    "Ошибка оплаты",
-    "Не выдали звёзды",
-    "Предложение по улучшению",
-    "Бот не отвечает/не работает",
-    "Проблема",
-    "Другой вопрос"
-]
-
-TICKET_GROUP_ID = -1003654030210  # ID группы/супергруппы для форум-топиков
+TICKET_SUBJECTS = os.getenv("TICKET_SUBJECTS", "Ошибка оплаты,Не выдали звёзды,Предложение по улучшению,Бот не отвечает/не работает,Проблема,Другой вопрос").split(',')
+TICKET_GROUP_ID = int(os.getenv("TICKET_GROUP_ID", "-1003654030210"))   # ID группы/супергруппы для форум-топиков
 
 # ========== Платежи Telegram Stars ==========
-PAYMENT_PROVIDER_TOKEN = ""      # Для XTR оставляем пустым
-STARS_PRICES = [15, 25, 50, 100]  # Доступные суммы для покупки (в XTR)
+PAYMENT_PROVIDER_TOKEN = os.getenv("PAYMENT_PROVIDER_TOKEN", "")        # Для XTR оставляем пустым
+STARS_PRICES = list(map(int, os.getenv("STARS_PRICES", "15,25,50,100").split(',')))  # Доступные суммы для покупки (в XTR)
 
 # ========== Кэширование ==========
-CACHE_TTL_BALANCE = 60           # секунд
-CACHE_TTL_TOP = 600             # 10 минут
-CACHE_TTL_STAR_RATE = 300       # 5 минут
+CACHE_TTL_BALANCE = int(os.getenv("CACHE_TTL_BALANCE", "60"))           # секунд
+CACHE_TTL_TOP = int(os.getenv("CACHE_TTL_TOP", "600"))                  # 10 минут
+CACHE_TTL_STAR_RATE = int(os.getenv("CACHE_TTL_STAR_RATE", "300"))      # 5 минут
 
 # ========== Пагинация ==========
-ITEMS_PER_PAGE = 10             # элементов на странице по умолчанию
+ITEMS_PER_PAGE = int(os.getenv("ITEMS_PER_PAGE", "10"))                 # элементов на странице по умолчанию
 
 # ========== Бекапы ==========
-AUTO_BACKUP_INTERVAL_HOURS = 6  # авто-бекап каждые 6 часов
-BACKUP_KEEP_COUNT = 7           # хранить последние 7 бекапов
+AUTO_BACKUP_INTERVAL_HOURS = int(os.getenv("AUTO_BACKUP_INTERVAL_HOURS", "6"))  # авто-бекап каждые 6 часов
+BACKUP_KEEP_COUNT = int(os.getenv("BACKUP_KEEP_COUNT", "7"))                    # хранить последние 7 бекапов
