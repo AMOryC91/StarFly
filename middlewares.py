@@ -5,6 +5,7 @@ from typing import Callable, Dict, Any, Awaitable
 from aiogram import BaseMiddleware
 from aiogram.types import Message, CallbackQuery
 
+# В начале файла добавьте:
 from database import is_user_banned, get_ban, is_user_frozen, get_freeze_info, is_maintenance_mode, get_maintenance_info
 from utils import has_access, format_datetime
 
@@ -116,7 +117,7 @@ class CheckMaintenanceMiddleware(BaseMiddleware):
         text = (
             "🔧 <b>Ведутся технические работы</b>\n\n"
             f"📋 Причина: {info['reason']}\n"
-            f"⏳ Ориентировочно: {info['duration']}\n\n"
+            f"⏳ Ориентировочно: {info['remaining']}\n\n"
             "Приносим извинения за неудобства!\n"
             "Попробуйте зайти позже."
         )
