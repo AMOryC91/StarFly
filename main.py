@@ -20,7 +20,7 @@ from handlers.games import router as games_router
 from handlers.utils import router as utils_router
 from handlers.errors import router as errors_router
 
- Импортируем мидлвари
+# Импортируем мидлвари
 from middlewares import (
     check_ban_middleware,
     check_freeze_middleware,
