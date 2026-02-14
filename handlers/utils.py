@@ -26,10 +26,9 @@ from keyboards import (
 
 logger = logging.getLogger(__name__)
 
-logger.info("ROUTER utils.py ЗАГРУЖЕН")
-
 router = Router(name="utils")
 
+logger.info("ROUTER utils.py ЗАГРУЖЕН")
 # ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
 
 def format_datetime(dt_str) -> str:
