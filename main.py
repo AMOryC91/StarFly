@@ -21,11 +21,11 @@ from handlers.utils import router as utils_router
 from handlers.errors import router as errors_router
 
 # Импортируем мидлвари
-from middlewares import (
-    check_ban_middleware,
-    check_freeze_middleware,
-    check_maintenance_middleware
-)
+#from middlewares import (
+#    check_ban_middleware,
+ #   check_freeze_middleware,
+ #   check_maintenance_middleware
+#)
 
 # Импортируем все CallbackData для использования в фильтрах (если необходимо где-то в main)
 # (но они не нужны, если мы используем роутеры; оставим для совместимости)
