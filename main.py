@@ -20,12 +20,12 @@ from handlers.games import router as games_router
 from handlers.utils import router as utils_router
 from handlers.errors import router as errors_router
 
-# Импортируем мидлвари
-#from middlewares import (
-#    check_ban_middleware,
- #   check_freeze_middleware,
- #   check_maintenance_middleware
-#)
+ Импортируем мидлвари
+from middlewares import (
+    check_ban_middleware,
+    check_freeze_middleware,
+    check_maintenance_middleware
+)
 
 # Импортируем все CallbackData для использования в фильтрах (если необходимо где-то в main)
 # (но они не нужны, если мы используем роутеры; оставим для совместимости)
@@ -87,12 +87,12 @@ async def update_admin_profiles():
         logger.error(f"Ошибка при обновлении профилей администраторов: {e}")
 
 # ===== РЕГИСТРАЦИЯ MIDDLEWARE =====
-#dp.message.middleware(check_ban_middleware)
-#dp.callback_query.middleware(check_ban_middleware)
-#dp.message.middleware(check_maintenance_middleware)
-#dp.callback_query.middleware(check_maintenance_middleware)
-#dp.message.middleware(check_freeze_middleware)
-#dp.callback_query.middleware(check_freeze_middleware)
+dp.message.middleware(check_ban_middleware)
+dp.callback_query.middleware(check_ban_middleware)
+dp.message.middleware(check_maintenance_middleware)
+dp.callback_query.middleware(check_maintenance_middleware)
+dp.message.middleware(check_freeze_middleware)
+dp.callback_query.middleware(check_freeze_middleware)
 
 # ===== ПОДКЛЮЧЕНИЕ РОУТЕРОВ =====
 dp.include_router(admin_router)
