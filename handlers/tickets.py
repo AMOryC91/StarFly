@@ -11,7 +11,7 @@ from config import TICKET_GROUP_ID, TICKET_SUBJECTS, OWNER_ID
 from database import (
     get_user, create_ticket, update_ticket_topic, get_ticket, get_ticket_by_topic_id,
     get_ticket_messages, add_ticket_message, get_user_tickets, get_all_tickets,
-    update_ticket_status, get_user, get_db_connection, rate_ticket, get_agent_stats,
+    update_ticket_status, get_db_connection, rate_ticket, get_agent_stats,
     log_admin_action
 )
 from keyboards import (
@@ -20,11 +20,15 @@ from keyboards import (
     get_ticket_priority_keyboard, get_ticket_rating_keyboard
 )
 from states import TicketStates
-from utils import has_access, format_datetime, get_user_display_name
+from helpers import (  # <-- ИЗМЕНЕНО: вместо from utils
+    has_access, format_datetime, get_user_display_name
+)
 
 logger = logging.getLogger(__name__)
 
 router = Router(name="tickets")
+
+# ... (весь остальной код tickets.py без изменений)
 
 # ========== СОЗДАНИЕ ТИКЕТА ==========
 @router.callback_query(F.data == "create_ticket")
