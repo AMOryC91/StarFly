@@ -87,12 +87,12 @@ async def update_admin_profiles():
         logger.error(f"Ошибка при обновлении профилей администраторов: {e}")
 
 # ===== РЕГИСТРАЦИЯ MIDDLEWARE =====
-dp.message.middleware(check_ban_middleware)
-dp.callback_query.middleware(check_ban_middleware)
-dp.message.middleware(check_maintenance_middleware)
-dp.callback_query.middleware(check_maintenance_middleware)
-dp.message.middleware(check_freeze_middleware)
-dp.callback_query.middleware(check_freeze_middleware)
+#dp.message.middleware(check_ban_middleware)
+#dp.callback_query.middleware(check_ban_middleware)
+#dp.message.middleware(check_maintenance_middleware)
+#dp.callback_query.middleware(check_maintenance_middleware)
+#dp.message.middleware(check_freeze_middleware)
+#dp.callback_query.middleware(check_freeze_middleware)
 
 # ===== ПОДКЛЮЧЕНИЕ РОУТЕРОВ =====
 dp.include_router(admin_router)
