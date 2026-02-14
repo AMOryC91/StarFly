@@ -80,6 +80,8 @@ def get_role_display(role: str) -> str:
 # ========== КОМАНДА /START ==========
 @router.message(Command("start"))
 async def cmd_start(message: types.Message):
+    logger.info(f"Команда /start от пользователя {message.from_user.id}")
+    
     """Обработчик команды /start – регистрация, рефералы, скидочные ссылки."""
     user_id = message.from_user.id
     username = message.from_user.username or ""
@@ -299,14 +301,6 @@ async def show_info(callback: types.CallbackQuery):
         "Нет, мы используем официальные методы.\n\n"
         f"💰 <b>Курс:</b> 1 звезда = {STAR_RATE:.2f}₽\n"
         f"📦 <b>Минимальный заказ:</b> {MIN_STARS} звёзд\n\n"
-        "❤️ <b>ПОДДЕРЖАТЬ РАЗРАБОТЧИКА</b>\n"
-        "Бот работает для вас 24/7\n"
-        "Если хотите сказать спасибо:\n\n"
-        "👤 @XAP4KTEP\n\n"
-        "Можно отправить:\n"
-        "• 🎁 Подарок в Telegram\n"
-        "• 💎 USDT (TON)\n"
-        "• ⚡ TON"
     )
     kb = InlineKeyboardBuilder()
     kb.row(InlineKeyboardButton(text="🎁 Отправить подарок", url="https://t.me/XAP4KTEP"))
