@@ -35,7 +35,7 @@ from database import (
     get_birthday_info, set_birthday_info,
     create_mailing, get_pending_mailings, update_mailing_status, get_mailing_stats,
     get_users_by_activity, get_db_connection,
-    get_user_by_id_or_username, add_warn, get_warns, remove_warn,
+    add_warn, get_warns, remove_warn,
     add_ban, remove_ban, get_ban, is_user_banned, get_all_bans,
     get_ticket, get_all_tickets, add_ticket_message, update_ticket_status
 )
@@ -53,7 +53,7 @@ from keyboards import (
     get_pagination_keyboard, get_order_action_keyboard, get_processed_order_keyboard
 )
 from states import AdminStates
-from utils import (
+from helpers import (  # <-- ИЗМЕНЕНО: вместо from utils
     has_access, format_datetime, format_file_size, format_duration,
     get_role_display, invalidate_settings_cache, invalidate_top_cache
 )
@@ -62,6 +62,7 @@ logger = logging.getLogger(__name__)
 
 router = Router(name="admin")
 
+# ... (весь остальной код admin.py без изменений, только импорт вы
 # ========== ВХОД В АДМИНКУ ==========
 @router.message(Command("admin"))
 async def cmd_admin(message: types.Message):
@@ -1247,9 +1248,9 @@ async def delete_backup_cmd(callback: types.CallbackQuery, callback_data: Backup
 
 @router.callback_query(AdminCallback.filter(F.action == "clear_cache"))
 async def clear_cache_cmd(callback: types.CallbackQuery):
+    from helpers import cache  # <-- ИСПРАВЛЕНО
     await invalidate_settings_cache()
     await invalidate_top_cache()
-    from utils import cache
     await cache.clear()
     await callback.answer("🧹 Кэш очищен!", show_alert=True)
 
