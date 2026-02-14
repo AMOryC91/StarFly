@@ -8,6 +8,7 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
+from aiogram.filters import CommandStart
 
 from config import (
     BOT_USERNAME, REQUIRED_CHANNELS, STAR_RATE, MIN_STARS,
@@ -78,7 +79,7 @@ def get_role_display(role: str) -> str:
     return ROLE_NAMES.get(role, '👤 Обычный пользователь')
 
 # ========== КОМАНДА /START ==========
-@router.message(Command("start"))
+@router.message(CommandStart())
 async def cmd_start(message: types.Message):
     logger.info(f"Команда /start от пользователя {message.from_user.id}")
     
