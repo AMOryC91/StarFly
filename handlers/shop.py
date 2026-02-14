@@ -35,7 +35,7 @@ from keyboards import (
     get_skip_keyboard, get_rating_keyboard
 )
 from states import PurchaseStates, ExchangeStates, WithdrawalStates, CalculatorStates
-from utils import (
+from helpers import (  # <-- ИЗМЕНЕНО: вместо from utils
     get_screenshot_path, format_datetime, has_access,
     invalidate_balance_cache, invalidate_top_cache, is_duplicate_action
 )
@@ -43,6 +43,8 @@ from utils import (
 logger = logging.getLogger(__name__)
 
 router = Router(name="shop")
+
+# ... (весь остальной код shop.py без изменений, только импорт заменён)
 
 # ========== РУЧНАЯ ПОКУПКА (ЧЕРЕЗ СКРИНШОТ) ==========
 @router.callback_query(MenuCallback.filter(F.action == "buy_manual"))
