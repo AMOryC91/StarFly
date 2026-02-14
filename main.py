@@ -17,7 +17,6 @@ from handlers.tickets import router as tickets_router
 from handlers.profile import router as profile_router
 from handlers.shop import router as shop_router
 from handlers.games import router as games_router
-from handlers.utils import router as utils_router
 from handlers.errors import router as errors_router
 
 # Импортируем мидлвари
@@ -100,7 +99,6 @@ dp.include_router(tickets_router)
 dp.include_router(profile_router)
 dp.include_router(shop_router)
 dp.include_router(games_router)
-dp.include_router(utils_router)
 dp.include_router(errors_router)
 
 async def main():
