@@ -26,6 +26,8 @@ from keyboards import (
 
 logger = logging.getLogger(__name__)
 
+logger.info("ROUTER utils.py ЗАГРУЖЕН")
+
 router = Router(name="utils")
 
 # ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
