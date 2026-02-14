@@ -359,11 +359,11 @@ async def back_to_menu(callback: types.CallbackQuery, state: FSMContext):
 
 # ========== ОБРАБОТЧИК ВСЕХ ОСТАЛЬНЫХ СООБЩЕНИЙ ==========
 # Вместо @router.message()
-@router.message(F.text, ~F.text.startswith('/'))
-async def handle_unknown_text(message: types.Message):
-    """Обрабатывает только обычные текстовые сообщения без команд."""
-    await message.answer(
-        "❓ Я не понимаю эту команду.\n"
-        "Используйте кнопки меню для навигации.",
-        reply_markup=get_main_menu()
-    )
+#@router.message(F.text, ~F.text.startswith('/'))
+#async def handle_unknown_text(message: types.Message):
+ #   """Обрабатывает только обычные текстовые сообщения без команд."""
+  #  await message.answer(
+   #     "❓ Я не понимаю эту команду.\n"
+    #     "Используйте кнопки меню для навигации.",
+    #    reply_markup=get_main_menu()
+  #  )
