@@ -458,7 +458,8 @@ def is_weekend() -> bool:
 def calculate_average(numbers: list) -> float:
     if not numbers:
         return 0.0
-    return sum(numbers) / len(numbers)    await cache.delete(f"balance:{user_id}")
+    return sum(numbers) / len(numbers)
+    await cache.delete(f"balance:{user_id}")
 
 @cached(ttl=CACHE_TTL_TOP, key="top_buyers")
 async def get_cached_top_buyers(limit: int = 10):
