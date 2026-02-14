@@ -17,7 +17,7 @@ from database import (
 )
 from keyboards import MenuCallback, GameCallback, get_games_menu, get_mines_game_keyboard, get_casino_bet_amount_keyboard, get_back_to_menu_keyboard
 from states import GameStates
-from utils import is_duplicate_action
+from helpers import is_duplicate_action
 
 logger = logging.getLogger(__name__)
 
