@@ -500,6 +500,25 @@ def get_user(user_id: int):
     conn.close()
     return user
 
+def get_top_agents(limit: int = 10):
+    """
+    Возвращает список лучших агентов по среднему рейтингу.
+    Каждый элемент кортежа: (username, full_name, avg_rating, votes)
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT u.username, u.full_name, AVG(tr.rating) as avg_rating, COUNT(tr.id) as votes
+        FROM ticket_ratings tr
+        JOIN users u ON tr.agent_id = u.user_id
+        GROUP BY tr.agent_id
+        ORDER BY avg_rating DESC, votes DESC
+        LIMIT ?
+    ''', (limit,))
+    top = cursor.fetchall()
+    conn.close()
+    return top
+
 def create_user(user_id: int, username: str, full_name: str):
     conn = get_db_connection()
     cursor = conn.cursor()
