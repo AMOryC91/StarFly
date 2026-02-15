@@ -6,11 +6,10 @@ from aiogram import BaseMiddleware
 from aiogram.types import Message, CallbackQuery
 
 from database import is_user_banned, get_ban, is_user_frozen, get_freeze_info, is_maintenance_mode, get_maintenance_info
-from helpers import has_access, format_datetime  # <-- ИСПРАВЛЕНО
+from helpers import has_access, format_datetime
 
 logger = logging.getLogger(__name__)
 
-# ========== МИДЛВАРЬ ПРОВЕРКИ БАНА ==========
 class CheckBanMiddleware(BaseMiddleware):
     async def __call__(
         self,
@@ -18,7 +17,6 @@ class CheckBanMiddleware(BaseMiddleware):
         event: Message | CallbackQuery,
         data: Dict[str, Any]
     ) -> Any:
-        # Пропускаем команду /start и /support
         if isinstance(event, Message):
             if event.text and event.text.startswith(('/start', '/support')):
                 return await handler(event, data)
@@ -52,8 +50,6 @@ class CheckBanMiddleware(BaseMiddleware):
 
         return await handler(event, data)
 
-
-# ========== МИДЛВАРЬ ПРОВЕРКИ ЗАМОРОЗКИ ==========
 class CheckFreezeMiddleware(BaseMiddleware):
     async def __call__(
         self,
@@ -61,7 +57,6 @@ class CheckFreezeMiddleware(BaseMiddleware):
         event: Message | CallbackQuery,
         data: Dict[str, Any]
     ) -> Any:
-        # Пропускаем команду /start и /support
         if isinstance(event, Message):
             if event.text and event.text.startswith(('/start', '/support')):
                 return await handler(event, data)
@@ -90,8 +85,6 @@ class CheckFreezeMiddleware(BaseMiddleware):
 
         return await handler(event, data)
 
-
-# ========== МИДЛВАРЬ ПРОВЕРКИ ТЕХНИЧЕСКИХ РАБОТ ==========
 class CheckMaintenanceMiddleware(BaseMiddleware):
     async def __call__(
         self,
@@ -102,21 +95,24 @@ class CheckMaintenanceMiddleware(BaseMiddleware):
         if not is_maintenance_mode():
             return await handler(event, data)
 
+        # Определяем пользователя
         if isinstance(event, Message):
             user_id = event.from_user.id
-            # Админы и тех.админы пропускаются
-            if has_access(user_id, 'tech_admin'):
-                return await handler(event, data)
         elif isinstance(event, CallbackQuery):
             user_id = event.from_user.id
-            if has_access(user_id, 'tech_admin'):
-                return await handler(event, data)
+        else:
+            return await handler(event, data)
 
+        # Админы и тех.админы пропускаются
+        if has_access(user_id, 'tech_admin'):
+            return await handler(event, data)
+
+        # Для всех остальных – показываем сообщение о техработах
         info = get_maintenance_info()
         text = (
             "🔧 <b>Ведутся технические работы</b>\n\n"
             f"📋 Причина: {info['reason']}\n"
-            f"⏳ Ориентировочно: {info['duration']}\n\n"
+            f"⏳ Ориентировочно: {info['remaining']}\n\n"
             "Приносим извинения за неудобства!\n"
             "Попробуйте зайти позже."
         )
@@ -127,10 +123,8 @@ class CheckMaintenanceMiddleware(BaseMiddleware):
             await event.answer("🔧 Технические работы", show_alert=True)
             await event.message.answer(text)
 
-        return
+        return None  # Прерываем обработку
 
-
-# ========== ЭКСПОРТ ЭКЗЕМПЛЯРОВ ==========
 check_ban_middleware = CheckBanMiddleware()
 check_freeze_middleware = CheckFreezeMiddleware()
 check_maintenance_middleware = CheckMaintenanceMiddleware()
