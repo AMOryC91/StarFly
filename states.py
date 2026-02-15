@@ -26,6 +26,7 @@ class TicketStates(StatesGroup):
     waiting_for_subject = State()
     waiting_for_message = State()
     waiting_for_reply = State()
+    waiting_for_search_query = State()  # <-- ДОБАВЛЕНО
     waiting_subject = State()
     waiting_ticket_message = State()
     waiting_reply = State()
@@ -169,14 +170,14 @@ class AdminStates(StatesGroup):
     waiting_achievement_name = State()
     waiting_for_achievement_name = State()
     waiting_ach_name = State()
-    waiting_ach_name_input = State()  # синоним
+    waiting_ach_name_input = State()
     
     waiting_achievement_desc = State()
     waiting_for_achievement_desc = State()
     waiting_ach_desc = State()
     waiting_description = State()
-    waiting_ach_description = State()  # <-- ДОБАВЛЕНО
-    waiting_ach_description_input = State()  # синоним
+    waiting_ach_description = State()
+    waiting_ach_description_input = State()
     
     waiting_achievement_icon = State()
     waiting_for_achievement_icon = State()
